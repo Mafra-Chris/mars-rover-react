@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-image: url('./assets/GaleCrater.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.N {
+  @apply -rotate-90;
+}
+.S {
+  @apply rotate-90;
+}
+.W {
+  transform: scaleX(-1);
+}
+.E {
+  @apply rotate-0;
+}
