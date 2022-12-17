@@ -1,29 +1,35 @@
 
-export default function Rover(instruction, landingPosition = '0 0 N', grid = [10, 10]) {
-  const individualInstructions = instruction.split("");
+export default class Rover {
 
-  const position = landingPosition.split(' ');
-  let xAxisRover = position[0]
-  let yAxisRover = position[1]
-  let faceDirectionRover = position[2]
+  constructor(landingPosition = '0 0 N', grid = [10, 10]) {
+    const position = landingPosition.split(' ');
+    this.xAxisRover = position[0]
+    this.yAxisRover = position[1]
+    this.faceDirectionRover = position[2]
+    this.grid = grid
+  }
 
-  function moveRover(instructions) {
-    instructions.forEach(instruction => {
+
+  moveRover(instructions) {
+    const individualInstructions = instructions.split("");
+    individualInstructions.forEach(instruction => {
       if (instruction === 'M') {
-        moveFoward(faceDirectionRover)
+        this.moveFoward(this.faceDirectionRover)
       } else if (instruction === 'L' || instruction === 'R') {
-        faceDirectionRover = turnRover(instruction)
+        this.faceDirectionRover = this.turnRover(instruction)
       } else {
         throw new Error(
           'Instrução não reconhecida!'
         )
       }
     });
+
+    return `${this.xAxisRover} ${this.yAxisRover} ${this.faceDirectionRover}`
   }
 
-  function turnRover(direction) {
+  turnRover(direction) {
     const cardinalsD = ['N', 'E', 'S', 'W']
-    let cardinalNumber = cardinalsD.indexOf(faceDirectionRover)
+    let cardinalNumber = cardinalsD.indexOf(this.faceDirectionRover)
     if (direction === 'L') {
       return cardinalsD[(cardinalNumber + 4 - 1) % 4];
     } else if (direction === 'R') {
@@ -36,29 +42,29 @@ export default function Rover(instruction, landingPosition = '0 0 N', grid = [10
 
   }
 
-  function moveFoward(direction) {
+  moveFoward(direction) {
 
     switch (direction) {
       case 'N':
-        if (yAxisRover < grid[1]) {
-          yAxisRover++
+        if (this.yAxisRover < this.grid[1]) {
+          this.yAxisRover++
         }
         break;
       case 'E':
-        if (xAxisRover < grid[0]) {
-          xAxisRover++
+        if (this.xAxisRover < this.grid[0]) {
+          this.xAxisRover++
         }
         break
       case 'S':
-        if (yAxisRover > 0) {
-          yAxisRover--
+        if (this.yAxisRover > 0) {
+          this.yAxisRover--
         }
 
         break;
 
       case 'W':
-        if (xAxisRover > 0) {
-          xAxisRover--
+        if (this.xAxisRover > 0) {
+          this.xAxisRover--
         }
 
         break;
@@ -70,9 +76,9 @@ export default function Rover(instruction, landingPosition = '0 0 N', grid = [10
 
   }
 
-  moveRover(individualInstructions)
 
-  return `${xAxisRover} ${yAxisRover} ${faceDirectionRover}`
+
+
 }
 
 
