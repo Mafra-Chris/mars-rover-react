@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import roverImg from './assets/rover.png';
 import Rover from './rover/Rover';
 import { roverSchema } from './validations/RoverMoves';
-import * as yup from 'yup';
+import { postMove } from './services/marsApi';
 function App() {
   const [map, setMap] = useState([]);
   const [mars, setMars] = useState(new Rover());
@@ -58,6 +58,7 @@ function App() {
         mars.moveRover(instructions);
         setPosition(mars.position);
         makeMap(mars.grid);
+        await postMove(instructions);
       } catch (error) {
         console.log(error.message);
       }
