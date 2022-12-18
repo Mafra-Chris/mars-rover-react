@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import roverImg from './assets/rover.png';
+import robotLoading from './assets/cool-robot-animate.svg';
 import Rover from './rover/Rover';
 import { roverSchema } from './validations/RoverMoves';
 import { postMove } from './services/marsApi';
@@ -12,6 +13,7 @@ function App() {
   const [row, setRow] = useState(mars.grid[1]);
   const [position, setPosition] = useState(mars.position);
   const [instructions, setInstructions] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const makeMap = (gridSize) => {
     let mapTemp = [];
@@ -44,7 +46,7 @@ function App() {
 
   const handleMove = async (event) => {
     event.preventDefault();
-
+    setIsLoading(true);
     let formData = {
       row: row,
       col: col,
@@ -64,9 +66,8 @@ function App() {
       } catch (error) {
         toast.error(error.message);
       }
+      setTimeout(() => setIsLoading(false), 2000);
     }
-
-    //enviar para db
   };
 
   useEffect(() => {
@@ -76,68 +77,73 @@ function App() {
   return (
     <div className="App flex flex-col items-center min-h-screen pb-4 gap-4">
       <ToastContainer />
-      <div id="map-container" className=" px-4 grow py-2">
-        {map}
-      </div>
-      <form
-        id="controls"
-        onSubmit={handleMove}
-        className="bg-white rounded-lg lg:w-1/2 p-4 flex flex-wrap justify-between gap-2 font-medium"
-      >
-        <label>
-          Altura
-          <input
-            type="number"
-            value={row}
-            min={1}
-            max={8}
-            onChange={(e) => setRow(e.target.value)}
-            className="p-2 border border-gray-600 bg-gray-200 rounded outline-none shadow-lg block w-20"
-            required
-          />
-        </label>
-
-        <label>
-          Largura
-          <input
-            type="number"
-            min={1}
-            max={10}
-            value={col}
-            onChange={(e) => setCol(e.target.value)}
-            className="p-2 border border-gray-600 bg-gray-200 rounded outline-none shadow-lg block w-20"
-            required
-          />
-        </label>
-        <label>
-          Posição
-          <input
-            type="text"
-            value={position}
-            onChange={(e) => setPosition(e.target.value)}
-            className="p-2 border border-gray-600 bg-gray-200 rounded outline-none shadow-lg block w-32"
-            required
-          />
-        </label>
-        <label>
-          Instruções
-          <input
-            type="text"
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
-            className="p-2 border border-gray-600 bg-gray-200 rounded outline-none shadow-lg block w-32"
-            required
-          />
-        </label>
-        <div className="flex flex-col justify-end">
-          <button
-            className="bg-orange-500 py-2 px-5 rounded text-white "
-            type="submit"
+      {!isLoading && (
+        <>
+          <div id="map-container" className=" px-4 grow py-2">
+            {map}
+          </div>
+          <form
+            id="controls"
+            onSubmit={handleMove}
+            className="bg-white rounded-lg lg:w-1/2 p-4 flex flex-wrap justify-between gap-2 font-medium"
           >
-            Mover
-          </button>
-        </div>
-      </form>
+            <label>
+              Altura
+              <input
+                type="number"
+                value={row}
+                min={1}
+                max={8}
+                onChange={(e) => setRow(e.target.value)}
+                className="p-2 border border-gray-600 bg-gray-200 rounded outline-none shadow-lg block w-20"
+                required
+              />
+            </label>
+
+            <label>
+              Largura
+              <input
+                type="number"
+                min={1}
+                max={10}
+                value={col}
+                onChange={(e) => setCol(e.target.value)}
+                className="p-2 border border-gray-600 bg-gray-200 rounded outline-none shadow-lg block w-20"
+                required
+              />
+            </label>
+            <label>
+              Posição
+              <input
+                type="text"
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+                className="p-2 border border-gray-600 bg-gray-200 rounded outline-none shadow-lg block w-32"
+                required
+              />
+            </label>
+            <label>
+              Instruções
+              <input
+                type="text"
+                value={instructions}
+                onChange={(e) => setInstructions(e.target.value)}
+                className="p-2 border border-gray-600 bg-gray-200 rounded outline-none shadow-lg block w-32"
+                required
+              />
+            </label>
+            <div className="flex flex-col justify-end">
+              <button
+                className="bg-orange-500 py-2 px-5 rounded text-white "
+                type="submit"
+              >
+                Mover
+              </button>
+            </div>
+          </form>
+        </>
+      )}
+      {isLoading && <img src={robotLoading} className="w-1/2" />}
     </div>
   );
 }
