@@ -1,16 +1,18 @@
-
 export default class Rover {
 
-  constructor(landingPosition = '0 0 N', grid = [10, 10]) {
-    const position = landingPosition.split(' ');
-    this.xAxisRover = position[0]
-    this.yAxisRover = position[1]
-    this.faceDirectionRover = position[2]
+  constructor(landingPosition = '0 0 N', grid = [5, 5]) {
+
+    this.position = landingPosition
+    this.splitPosition = this.position.split(' ');
+    this.xAxisRover = this.splitPosition[0]
+    this.yAxisRover = this.splitPosition[1]
+    this.faceDirectionRover = this.splitPosition[2]
     this.grid = grid
   }
 
 
   moveRover(instructions) {
+
     const individualInstructions = instructions.split("");
     individualInstructions.forEach(instruction => {
       if (instruction === 'M') {
@@ -24,7 +26,9 @@ export default class Rover {
       }
     });
 
-    return `${this.xAxisRover} ${this.yAxisRover} ${this.faceDirectionRover}`
+    this.setPosition(`${this.xAxisRover} ${this.yAxisRover} ${this.faceDirectionRover}`)
+
+    //return `${this.xAxisRover} ${this.yAxisRover} ${this.faceDirectionRover}`
   }
 
   turnRover(direction) {
@@ -46,12 +50,12 @@ export default class Rover {
 
     switch (direction) {
       case 'N':
-        if (this.yAxisRover < this.grid[1]) {
+        if (this.yAxisRover < this.grid[1] - 1) {
           this.yAxisRover++
         }
         break;
       case 'E':
-        if (this.xAxisRover < this.grid[0]) {
+        if (this.xAxisRover < this.grid[0] - 1) {
           this.xAxisRover++
         }
         break
@@ -77,7 +81,13 @@ export default class Rover {
   }
 
 
-
+  setPosition(newPosition) {
+    this.position = newPosition
+    this.splitPosition = this.position.split(' ');
+    this.xAxisRover = this.splitPosition[0]
+    this.yAxisRover = this.splitPosition[1]
+    this.faceDirectionRover = this.splitPosition[2]
+  }
 
 }
 
