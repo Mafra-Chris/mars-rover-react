@@ -3,6 +3,8 @@ import roverImg from './assets/rover.png';
 import Rover from './rover/Rover';
 import { roverSchema } from './validations/RoverMoves';
 import { postMove } from './services/marsApi';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const [map, setMap] = useState([]);
   const [mars, setMars] = useState(new Rover());
@@ -60,7 +62,7 @@ function App() {
         makeMap(mars.grid);
         await postMove(instructions);
       } catch (error) {
-        console.log(error.message);
+        toast.error(error.message);
       }
     }
 
@@ -73,6 +75,7 @@ function App() {
 
   return (
     <div className="App flex flex-col items-center min-h-screen pb-4 gap-4">
+      <ToastContainer />
       <div id="map-container" className=" px-4 grow py-2">
         {map}
       </div>
