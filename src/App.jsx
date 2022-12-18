@@ -82,7 +82,7 @@ function App() {
       <form
         id="controls"
         onSubmit={handleMove}
-        className="bg-white rounded-lg lg:w-1/2 p-4 flex flex-wrap justify-between gap-2 "
+        className="bg-white rounded-lg lg:w-1/2 p-4 flex flex-wrap justify-between gap-2 font-medium"
       >
         <label>
           Altura
