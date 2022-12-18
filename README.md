@@ -2,13 +2,13 @@
 
 ### Instalação
 ```
-pnpm install
+npm install
 ```
 
 ### Execução
 #### React
 ```
-pnpm run dev
+npm run dev
 ```
 #### JSON Server
 ```
