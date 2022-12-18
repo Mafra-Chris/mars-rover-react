@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 body {
-  background-image: url('./assets/GaleCrater.png');
+  background-image: url('./assets/stacked-waves-haikei.svg');
   background-repeat: no-repeat;
   background-size: cover;
+  height: 100vh;
 }
 .N {
   @apply -rotate-90;
