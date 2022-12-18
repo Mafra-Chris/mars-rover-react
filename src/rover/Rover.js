@@ -1,6 +1,6 @@
 export default class Rover {
 
-  constructor(landingPosition = '0 0 N', grid = [5, 5]) {
+  constructor(landingPosition = '0 0 N', grid = [10, 8]) {
 
     this.position = landingPosition
     this.splitPosition = this.position.split(' ');
